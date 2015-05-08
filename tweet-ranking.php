@@ -43,10 +43,10 @@ class TweetActivityRanking_Widget extends WP_Widget {
 			'%1$s %2$s %3$s', $args['before_title'], (empty($instance['title'])) ? $args['widget_name'] : $instance['title'], $args['after_title']
 		);
 
-		$cnt = (count($data) > $instance['limit']) ? $instance['limit'] : count($data);
+		$limit = (count($data) > $instance['limit']) ? $instance['limit'] : count($data);
 		
 		print("<ol>\n");
-		for ($i = 0; $i < $cnt; $i++) {
+		for ($i = 0; $i < $limit; $i++) {
 			printf("<li>%s</li>\n", preg_replace("/(.*)\s(https?.*)/", "$1", $data[$i]['Tweet text']));
 		}
 		print("</ol>\n");
