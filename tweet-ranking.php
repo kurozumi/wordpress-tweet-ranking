@@ -84,11 +84,13 @@ class TweetActivityRanking_Widget extends WP_Widget {
 		$header = isset($args['header']) ? (int) $args['header'] : 0;
 		$limit = isset($args['limit']) ? esc_attr($args['limit']) : 10;
 		$sort = isset($args['sort']) ? esc_attr($args['sort']) : '';
+		$error = isset($args['error']) ? esc_attr($args['error']) : '';
 
-		if (!empty($args['error'])) {
-			echo '<p><strong>' . sprintf(__('%s'), $args['error']) . '</strong></p>';
-		} else {
-			$post = get_post($attachement_id);
+		if (!empty($error)) {
+			echo '<p><strong>' . sprintf(__('%s'), $error) . '</strong></p>';
+		} elseif(!$post = get_post($attachement_id)) {
+			echo '<p><strong>' . sprintf(__('%s'), "CSVファイルをアップロードして下さい。") . '</strong></p>';
+		} else{
 			printf('<p><strong>%sにツイートアクティビティCSVファイルが登録されました。</strong></p>', $post->post_date);
 		}
 		?>
@@ -135,8 +137,8 @@ class TweetActivityRanking_Widget extends WP_Widget {
 		setlocale(LC_ALL, 'ja_JP.UTF-8');
 		
 		$file = get_attached_file($instance['attachement_id']);
-		
-		if (($file === FALSE) || ($file = file_get_contents($file)) === FALSE) {
+				
+		if (($file === FALSE) || empty($file) || ($file = file_get_contents($file)) === FALSE) {
 			return FAlSE;
 		} else {
 			//テンポラリファイルを作成
