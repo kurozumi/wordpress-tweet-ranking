@@ -6,7 +6,7 @@
   Author: kurozumi
   Author URI: http://a-zumi.net
   Plugin URI: http://a-zumi.net
-  Text Domain: tweet-activity
+  Text Domain: tweet-ranking
   Domain Path: /languages
  */
 
